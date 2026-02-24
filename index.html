@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Do You Love Me? ❤️</title>
 
 <style>
@@ -19,22 +20,21 @@ body {
 
 h1 {
     color:white;
-    font-size:42px;
-    margin-bottom:40px;
+    font-size:32px;
+    text-align:center;
+    padding:0 20px;
 }
 
 .button-box {
-    display:flex;
-    gap:25px;
+    margin-top:30px;
 }
 
 button {
-    padding:15px 35px;
-    font-size:20px;
+    padding:15px 30px;
+    font-size:18px;
     border:none;
     border-radius:12px;
     cursor:pointer;
-    transition:0.3s ease;
 }
 
 #yes {
@@ -42,14 +42,10 @@ button {
     color:white;
 }
 
-#yes:hover {
-    transform:scale(1.1);
-}
-
 #no {
     background:#dc3545;
     color:white;
-    position:absolute;   /* ✅ FIXED */
+    position:absolute;
 }
 </style>
 </head>
@@ -76,29 +72,37 @@ function sendLove() {
             message: "Someone said YES 😍"
         })
     })
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
         alert("Awwww, I Love You Too 😍❤️");
         location.reload();
-    })
-    .catch(error => {
-        alert("Something went wrong!");
-        console.error(error);
     });
 }
 
-// No button bhaagega properly
 const noBtn = document.getElementById("no");
 
-// Starting position
-noBtn.style.left = "55%";
-noBtn.style.top = "60%";
+// Initial position center ke paas
+noBtn.style.left = (window.innerWidth / 2 + 60) + "px";
+noBtn.style.top = (window.innerHeight / 2) + "px";
 
-noBtn.addEventListener("mouseover", function() {
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+function moveButton() {
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
+}
+
+// Desktop hover
+noBtn.addEventListener("mouseover", moveButton);
+
+// Mobile touch
+noBtn.addEventListener("touchstart", function(e){
+    e.preventDefault();
+    moveButton();
 });
 </script>
 
